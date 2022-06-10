@@ -20,8 +20,8 @@ impl GravityPlugin {
     ) {
         for (_e, _piece, mut position) in pieces.iter_mut() {
             // TODO: workout colisions
-            if position.1 > 0 {
-                position.1 -= 1;
+            if position.1 > 0.0 {
+                position.1 -= 1.0;
             }
         }
     }

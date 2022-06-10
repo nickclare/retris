@@ -22,7 +22,7 @@ pub const BLOCK_SIZE: f32 = 16.0;
 impl GameFieldPlugin {
     #[inline]
     fn calc_wall_offset(size: (f32, f32)) -> Vec3 {
-        Vec3::X * (0.5 * size.0 * BLOCK_SIZE)
+        Vec3::X * (0.5 * size.0)
     }
 
     fn spawn_field(mut commands: Commands, graphics: Res<SpritesheetAtlas>) {
@@ -44,13 +44,14 @@ impl GameFieldPlugin {
         name: Name,
         graphics: &Res<SpritesheetAtlas>,
     ) -> Entity {
-        let y_offset: f32 = 0.5 * (DEFAULT_SIZE.1 as f32 - 2.0) * BLOCK_SIZE;
+        let y_offset: f32 = 0.5 * (DEFAULT_SIZE.1 as f32 - 2.0);
         let top = commands
             .spawn()
             .insert_bundle(SpriteSheetBundle {
                 texture_atlas: graphics.handle(),
                 sprite: TextureAtlasSprite {
                     index: SpriteIndex::Top.index(),
+                    custom_size: Some(Vec2::new(1.0, 1.0)),
                     ..Default::default()
                 },
                 transform: Transform::from_translation(Vec3::new(0.0, y_offset, 0.0)),
@@ -63,6 +64,7 @@ impl GameFieldPlugin {
                 texture_atlas: graphics.handle(),
                 sprite: TextureAtlasSprite {
                     index: SpriteIndex::Bottom.index(),
+                    custom_size: Some(Vec2::new(1.0, 1.0)),
                     ..Default::default()
                 },
                 transform: Transform::from_translation(Vec3::new(0.0, -y_offset, 0.0)),
@@ -75,6 +77,7 @@ impl GameFieldPlugin {
                 texture_atlas: graphics.handle(),
                 sprite: TextureAtlasSprite {
                     index: SpriteIndex::Wall.index(),
+                    custom_size: Some(Vec2::new(1.0, 1.0)),
                     ..Default::default()
                 },
                 transform: Transform::from_scale(Vec3::new(1.0, DEFAULT_SIZE.1 as f32 - 2.0, 1.0)),
